@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: lib/commons-lang3-3.3.2.jar lib/freemarker-2.3.8.jar lib/mysql-connector-java-5.1.22.jar lib/xstream-1.4.5.jar 
+Main-Class: com.generated.util.GeneratedTest 
+
+

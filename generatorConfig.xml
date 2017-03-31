@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	
+	<!-- 操作人信息 -->
+	<operator author="WML" corporateName="因纳特科技有限公司"/>
+
+	<!-- 具体生成信息配置 -->
+  	<context>
+		<!-- jdbc连接配置 -->
+	    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+	        connectionURL="jdbc:mysql://192.168.1.170:3306/in_shop_design?useUnicode=true&amp;characterEncoding=UTF-8"
+	        userName="root"
+	        passWord="123456">
+	    </jdbcConnection>
+	
+		<!-- 实体类配置 -->
+	    <javaModelGenerator targetPackage="com.yntsoft.entity" targetProject="code"></javaModelGenerator>
+
+		<!-- XML文件配置 -->
+        <sqlMapGenerator targetPackage="mybatis" targetProject="code"></sqlMapGenerator>
+
+		<!-- 接口文件配置 -->
+        <javaClientGenerator targetPackage="com.yntsoft.mapper" targetProject="code"></javaClientGenerator>
+		
+		<!-- Service文件配置 -->
+		<javaServiceGenerator targetPackage="com.yntsoft.service" targetProject="code"></javaServiceGenerator>
+		
+		<!-- Controller文件配置 -->
+		<javaControllerGenerator targetPackage="com.yntsoft.controller.student" targetProject="code"></javaControllerGenerator>
+		
+		<!-- 页面文件配置 -->
+		<javaPageGenerator targetPackage="com.yntsoft.page" targetProject="code"></javaPageGenerator>
+		
+		<!-- 待生成表集合 -->
+		<list>
+			<!-- 表名，建议数据表名使用以下格式"user_info" -->
+			<!-- isContent:标识是否生成注释  true:需要  false:不需要  默认为true -->
+			<table isContent="true" tableName="commodity_association"></table>
+			
+		</list>
+  	</context>
+</generatorConfiguration>
