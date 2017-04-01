@@ -40,6 +40,12 @@ public class Context {
     private SqlMapGenerator sqlMapGenerator;
     
     /**
+     * XML继承文件配置项 
+     */
+    @XStreamAlias("sqlMapExtendGenerator")
+    private SqlMapExtendGenerator sqlMapExtendGenerator;
+    
+    /**
      * Service文件参数 
      */
     @XStreamAlias("javaServiceGenerator")
@@ -128,13 +134,22 @@ public class Context {
 		this.tableList = tableList;
 	}
 
+	public SqlMapExtendGenerator getSqlMapExtendGenerator() {
+		return sqlMapExtendGenerator;
+	}
+
+	public void setSqlMapExtendGenerator(SqlMapExtendGenerator sqlMapExtendGenerator) {
+		this.sqlMapExtendGenerator = sqlMapExtendGenerator;
+	}
+
 	@Override
     public String toString() {
         return "Context [jdbcConnection=" + jdbcConnection + ", javaModelGenerator="
                + javaModelGenerator + ", javaClientGenerator=" + javaClientGenerator
-               + ", sqlMapGenerator=" + sqlMapGenerator + ", javaServiceGenerator="
-               + javaServiceGenerator + ", javaControllerGenerator=" + javaControllerGenerator
-               + ", javaPagerGenerator=" + javaPagerGenerator + ", tableList=" + tableList + "]";
+               + ", sqlMapGenerator=" + sqlMapGenerator + ", sqlMapExtendGenerator="
+               + sqlMapExtendGenerator + "javaServiceGenerator=" + javaServiceGenerator +
+               ", javaControllerGenerator=" + javaControllerGenerator + ", javaPagerGenerator="
+               + javaPagerGenerator + ", tableList=" + tableList + "]";
     }
 
 }

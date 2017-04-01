@@ -10,6 +10,7 @@ import com.generated.config.Context;
 import com.generated.config.DBInfo;
 import com.generated.config.Operator;
 import com.generated.config.TableList;
+import com.generated.config.Type;
 import com.generated.dto.GenerateInfo;
 
 /**
@@ -81,10 +82,11 @@ public class GeneratedTest {
                 System.exit(-1);
             }
             Operator operator = config.getOperator();
+            Type type = config.getType();
             Context context = config.getContext();
             TableList tableList = config.getContext().getTableList();
             
-            if(null == operator || null == context || null == tableList) {
+            if(null == operator || null == type || null == context || null == tableList) {
                 System.out.println("[" + configurationFile.getName() + "]必要参数错误,请确认配置是否正确...");
                 System.exit(-1);
             }
@@ -98,12 +100,14 @@ public class GeneratedTest {
             info.setEntityPackage(context.getJavaModelGenerator().getTargetPackage());
             info.setMapperPackage(context.getJavaClientGenerator().getTargetPackage());
             info.setXmlPackage(context.getSqlMapGenerator().getTargetPackage());
+            info.setXmlExtendPackage(context.getSqlMapExtendGenerator().getTargetPackage());
             info.setServicePackage(context.getJavaServiceGenerator().getTargetPackage());
             info.setControllerPackage(context.getJavaControllerGenerator().getTargetPackage());
             info.setPagePackage(context.getJavaPagerGenerator().getTargetPackage());
             info.setEntityFilePath("/" + context.getJavaModelGenerator().getTargetProject() + "/" + info.getEntityPackage().replaceAll("\\.", "/") + "/");
             info.setMapperFilePath("/" + context.getJavaClientGenerator().getTargetProject() + "/" + info.getMapperPackage().replaceAll("\\.", "/") + "/");
             info.setXmlFilePath("/" + context.getSqlMapGenerator().getTargetProject() + "/" + info.getXmlPackage().replaceAll("\\.", "/") + "/");
+            info.setXmlExtendFilePath("/" + context.getSqlMapExtendGenerator().getTargetProject() + "/" + info.getXmlExtendPackage().replaceAll("\\.", "/") + "/");
             info.setServicePath("/" + context.getJavaServiceGenerator().getTargetProject() + "/" + info.getServicePackage().replaceAll("\\.", "/") + "/");
             info.setControllerPath("/" + context.getJavaControllerGenerator().getTargetProject() + "/" + info.getControllerPackage().replaceAll("\\.", "/") + "/");
             info.setPagePath("/" + context.getJavaPagerGenerator().getTargetProject() + "/" + info.getPagePackage().replaceAll("\\.", "/") + "/");
@@ -117,7 +121,7 @@ public class GeneratedTest {
             /**
              * 代码自动生成
              */
-            generated(info, dbInfo, tableList);
+            generated(info, dbInfo, tableList, type);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,10 +133,11 @@ public class GeneratedTest {
 	 * @param generateInfo 生成配置项
 	 * @param dbInfo       数据库连接配置项
 	 * @param tableList    数据表集合
+	 * @param type			 身份标识
 	 * @author WML
 	 * 2016年10月25日-上午9:25:42
 	 */
-	public static void generated(GenerateInfo generateInfo, DBInfo dbInfo, TableList tableList) {
+	public static void generated(GenerateInfo generateInfo, DBInfo dbInfo, TableList tableList, Type type) {
 	  // 生成代码入口
       Connection con = JdbcConnectionUtil.getDatabaseMetaData(dbInfo.getDriver(), dbInfo.getUrl(), dbInfo.getUser(), dbInfo.getPassword());
       
@@ -145,7 +150,7 @@ public class GeneratedTest {
       db = urlStr[urlStr.length - 1];
       // 剔除编码等非数据库信息
       db = db.split("\\?")[0];
-      DatabaseMetaDateApplication.generateMain(generateInfo, con, db, tableList.getTable());
+      DatabaseMetaDateApplication.generateMain(generateInfo, con, db, tableList.getTable(), type.getValue());
 	}
 }
 

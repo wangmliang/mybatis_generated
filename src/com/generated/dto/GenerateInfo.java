@@ -45,6 +45,11 @@ public class GenerateInfo {
     private String xmlPackage;
     
     /**
+     * mapperExtendXml接口类包名
+     */
+    private String xmlExtendPackage;
+    
+    /**
      * java类是否导入 Date、Array包
      * 0： 不导入  1：导入
      */
@@ -69,6 +74,11 @@ public class GenerateInfo {
      * xml文件保存路径
      */
     private String xmlFilePath;
+    
+    /**
+     * xml继承文件保存路径
+     */
+    private String xmlExtendFilePath;
     
     /**
      * service包名
@@ -249,14 +259,31 @@ public class GenerateInfo {
         this.pagePath = pagePath;
     }
 
-    @Override
+    public String getXmlExtendPackage() {
+		return xmlExtendPackage;
+	}
+
+	public void setXmlExtendPackage(String xmlExtendPackage) {
+		this.xmlExtendPackage = xmlExtendPackage;
+	}
+
+	public String getXmlExtendFilePath() {
+		return xmlExtendFilePath;
+	}
+
+	public void setXmlExtendFilePath(String xmlExtendFilePath) {
+		this.xmlExtendFilePath = xmlExtendFilePath;
+	}
+
+	@Override
     public String toString() {
         return "GenerateInfo [author=" + author + ", corporateName=" + corporateName + ", time="
                + time + ", entityPackage=" + entityPackage + ", mapperPackage=" + mapperPackage
                + ", xmlPackage=" + xmlPackage + ", isPackgeType=" + isPackgeType + ", tableInfo="
                + tableInfo + ", entityFilePath=" + entityFilePath + ", mapperFilePath="
-               + mapperFilePath + ", xmlFilePath=" + xmlFilePath + ", servicePackage="
-               + servicePackage + ", servicePath=" + servicePath + ", controllerPackage="
+               + mapperFilePath + ",xmlExtendPackage=" + xmlExtendPackage + ", xmlFilePath="
+               + xmlFilePath + ", servicePackage=" + servicePackage + ",xmlExtendFilePath=" 
+               + xmlExtendFilePath + ", servicePath=" + servicePath + ", controllerPackage="
                + controllerPackage + ", controllerPath=" + controllerPath + ", pagePackage="
                + pagePackage + ", pagePath=" + pagePath + ", ftlPath=" + ftlPath + "]";
     }

@@ -38,10 +38,11 @@ public class DatabaseMetaDateApplication {
      * @param conn      数据连接对象
      * @param db        数据库信息
      * @param tableList 数据表集合
+     * @param value		 身份标识
      * @author WML
      * 2016年10月25日-下午2:49:17
      */
-    public static void generateMain(GenerateInfo info, Connection conn, String db, List<Table> tableList) {
+    public static void generateMain(GenerateInfo info, Connection conn, String db, List<Table> tableList, String value) {
         try {
             /**
              * 配置文件自带数据表
@@ -53,7 +54,7 @@ public class DatabaseMetaDateApplication {
                         System.out.println(">>> 从[" + db + "]中获取数据表[" + table.getTableName() + "]信息异常...");
                         System.exit(-1);
                     }
-                    generate(dbTableInfoDtos.get(0), info, conn, db);
+                    generate(dbTableInfoDtos.get(0), info, conn, db, value);
                 }
                 System.exit(-1);
             }
@@ -67,7 +68,7 @@ public class DatabaseMetaDateApplication {
                System.exit(-1);
             } 
             for (DBTableInfoDto dbTableInfo : list) {
-                generate(dbTableInfo, info, conn, db);
+                generate(dbTableInfo, info, conn, db, value);
             }
         } catch (Exception e) {
             System.out.println("代码自动生成处理异常：" + e.getMessage());
@@ -77,15 +78,16 @@ public class DatabaseMetaDateApplication {
     
     /**
      * 自动生成代码
-     * @param dbTableInfo   
-     * @param info
-     * @param conn
-     * @param db
+     * @param dbTableInfo   数据库信息
+     * @param info			自动生成配置信息
+     * @param conn			数据库链接对象
+     * @param db			数据库
+     * @param value			身份标识
      * @throws Exception
      * @author WML
      * 2016年10月25日-下午2:59:57
      */
-    public static void generate(DBTableInfoDto dbTableInfo, GenerateInfo info, Connection conn, String db) throws Exception {
+    public static void generate(DBTableInfoDto dbTableInfo, GenerateInfo info, Connection conn, String db, String value) throws Exception {
         /**
          * 根据表信息查询对应字段信息（字段名+类型+注释）
          */
@@ -194,22 +196,27 @@ public class DatabaseMetaDateApplication {
         /**
          *  mapper 接口
          */
-        Freemarker.printFile("mapper.ftl", root, tableInfo.getClassName() + "Mapper.java", info.getMapperFilePath(), info.getFtlPath());
+        Freemarker.printFile("mapper-" + value +".ftl", root, tableInfo.getClassName() + "Mapper.java", info.getMapperFilePath(), info.getFtlPath());
         
         /**
          *  xml文件
          */
-        Freemarker.printFile("mapperXml.ftl", root, tableInfo.getClassName() + "Mapper.xml", info.getXmlFilePath(), info.getFtlPath());
+        Freemarker.printFile("mapperXml-" + value +".ftl", root, tableInfo.getClassName() + "Mapper.xml", info.getXmlFilePath(), info.getFtlPath());
+        
+        /**
+         *  xmlExtend文件
+         */
+        Freemarker.printFile("extendXml.ftl", root, tableInfo.getClassName() + "MapperExtend.xml", info.getXmlExtendFilePath(), info.getFtlPath());
         
         /**
          *  Service
          */
-        Freemarker.printFile("service.ftl", root, tableInfo.getClassName() + "Service.java", info.getServicePath(), info.getFtlPath());
+        Freemarker.printFile("service-" + value +".ftl", root, tableInfo.getClassName() + "Service.java", info.getServicePath(), info.getFtlPath());
         
         /**
          *  Controller
          */
-        Freemarker.printFile("controller.ftl", root, tableInfo.getClassName() + "Controller.java", info.getControllerPath(), info.getFtlPath());
+        Freemarker.printFile("controller-" + value +".ftl", root, tableInfo.getClassName() + "Controller.java", info.getControllerPath(), info.getFtlPath());
         
         //jsp
         

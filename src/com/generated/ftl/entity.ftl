@@ -1,4 +1,4 @@
-/*
+/**
  * ${info.tableInfo.className}.java
  * ${info.corporateName}
  * All rights reserved.
@@ -29,7 +29,7 @@ import ${info.entityPackage}.${var.tersName};
  * <pre>
  * <b>Title：</b>${info.tableInfo.className}.java<br/>
  * <b>@author： </b>${info.author}<br/>
- * <b>@version：</b>@version V1.0<br/>
+ * <b>@version：</bV1.0<br/>
  * <b>@date：</b>${info.time?string("yyyy-MM-dd HH:mm:ss")} Created<br/>  
  * <b>Copyright (c) ${info.time?string("yyyy")} ASPire Tech.</b>   
  * </pre>

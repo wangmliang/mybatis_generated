@@ -12,8 +12,8 @@ import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
  * <b>Copyright (c) 2016 ASPire Tech.</b>   
  *  </pre>
  */
-@XStreamAlias("sqlMapGenerator")
-public class SqlMapGenerator {
+@XStreamAlias("sqlMapExtendGenerator")
+public class SqlMapExtendGenerator {
     
     /**
      * 包名

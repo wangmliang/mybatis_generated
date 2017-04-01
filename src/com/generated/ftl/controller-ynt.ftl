@@ -1,4 +1,4 @@
-/*
+/**
  * ${info.tableInfo.className}.java
  * ${info.corporateName}
  * All rights reserved.
@@ -22,15 +22,11 @@ import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aspire.webbas.core.pagination.mybatis.pager.Page;
-import com.aspire.webbas.core.web.BaseController;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springside.modules.web.Servlets;
 
@@ -39,14 +35,14 @@ import org.springside.modules.web.Servlets;
  * <pre>
  * <b>Title：</b>${info.tableInfo.className}Controller.java<br/>
  * <b>@author： </b>${info.author}<br/>
- * <b>@version：</b>@version V1.0<br/>
+ * <b>@version：</b>V1.0<br/>
  * <b>@date：</b>${info.time?string("yyyy-MM-dd HH:mm:ss")} Created<br/>  
  * <b>Copyright (c) ${info.time?string("yyyy")} ASPire Tech.</b>   
  * </pre>
  */
-@Controller("${info.tableInfo.className}Controller")
+@Controller
 @RequestMapping(value ="/${info.tableInfo.methodName}")
-public class ${info.tableInfo.className}Controller extends BaseController {
+public class ${info.tableInfo.className}Controller {
 
 	protected static Logger logger = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
@@ -55,96 +51,81 @@ public class ${info.tableInfo.className}Controller extends BaseController {
 	private ${info.tableInfo.className}Service ${info.tableInfo.methodName}Service;
 	
 	/**
-     * 跳转数据列表Url
+     * 数据列表
      * @param  model
      * @param  request
      * @author ${info.author}
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
-	@RequestMapping(value = "/list")
-	public String list(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	public String list(Model model, HttpServletRequest request, HttpServletResponse response) {
+		try{
+			Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+			
+			// 分页查询
+			PageInfo<${info.tableInfo.className}> pageList = ${info.tableInfo.methodName}Service.getPageList(searchParams, 10);
+			model.addAttribute("pageList", pageList);
+			
+			// 将搜索条件编码成字符串，用于排序，分页的URL
+			model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		} catch (Exception e) {
+			logger.error("${info.tableInfo.className}类查询列表异常：" + e.getMessage(), e);
+		}
 		return "/list";
 	}
 	
 	/**
-	 * 数据列表
-	 * @param page		${info.tableInfo.className}分页对象
-	 * @param request
-	 * @author ${info.author}
-     * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
-	 */
-	@RequestMapping(value = "/query")
-	@ResponseBody
-	public Map<String, Object> query(Page<${info.tableInfo.className}> page, HttpServletRequest request) {
-		Page<${info.tableInfo.className}> list = ${info.tableInfo.methodName}Service.pageQuery(page);
-		return this.page(list);
-	}
-	
-	/**
-	 * 根据id获取数据
-	 * @param id
-	 * @param request
-	 * @return
-	 * @author ${info.author}
-     * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
-	 */
-	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> get(${info.tableInfo.primaryKeyEntityType} id, HttpServletRequest request) {
-		${info.tableInfo.className} data = ${info.tableInfo.methodName}Service.selectByPrimaryKey(id);
-		return super.success(data);
-	}
-	
-	/**
-     * 跳转添加页面或编辑页面
+     * 跳转添加页面
      * @param  model
      * @param  request
      * @author ${info.author}
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
-	@RequestMapping(value = "/save", method = RequestMethod.GET)
-	public String save(${info.tableInfo.primaryKeyEntityType} id, Model model, HttpServletRequest request) {
-		model.addAttribute("id", id);
-		return "/save";
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model, HttpServletRequest request, HttpServletResponse response) {
+		try{
+			
+		} catch (Exception e) {
+			logger.error("${info.tableInfo.className}类跳转add页面异常：" + e.getMessage(), e);
+		}
+		return "/add";
 	}
 	
 	/**
-     * 保存数据（add or update）
-     * @param  data	${info.tableInfo.methodName}对象
+     * 保存数据
+     * @param  data	${info.tableInfo.className}对象
      * @param  model
      * @param  request
      * @author ${info.author}
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @ResponseBody
-	public Map<String, Object> save(@Valid ${info.tableInfo.className} data, Model model, HttpServletRequest request) {
+	public String save(@Valid ${info.tableInfo.className} data, Model model, HttpServletRequest request, HttpServletResponse response) {
 		try{
 			${info.tableInfo.methodName}Service.saveAndUpdate(data);
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
 		}
-		return super.success(data);
+		return "redirect:/list";
 	}
 	
 	/**
      * 删除数据
-     * @param id 删除数据组","分隔
-     * @return 
+     * @param  ${info.tableInfo.primaryKeyEntity} id（包括字符串数组, ","号分隔）
+     * @param  flag	true:单个删除	false:批量删除
+     * @param  model
+     * @param  request
      * @author ${info.author}
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
-    @RequestMapping(value = "/delete")
-	@ResponseBody
-	public Map<String, Object> delete(String id) {
-    	try {
-    		int row = ${info.tableInfo.methodName}Service.delete(id, true);
-    		if(row == 0)
-    			return super.fail("删除失败");
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String delete(String ${info.tableInfo.primaryKeyEntity}, boolean flag, Model model, 
+			HttpServletRequest request, HttpServletResponse response) {
+		try{
+			${info.tableInfo.methodName}Service.delete(${info.tableInfo.primaryKeyEntity}, flag);
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类delete数据异常：" + e.getMessage(), e);
-			return super.fail("删除失败");
+			logger.error("${info.tableInfo.className}类删除数据异常：" + e.getMessage(), e);
 		}
-		return super.success("删除成功");
+		return "redirect:/list";
 	}
 }

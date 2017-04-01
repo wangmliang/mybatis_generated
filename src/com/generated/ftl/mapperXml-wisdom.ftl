@@ -32,9 +32,7 @@
     </sql>
     
     <!-- 分页列表查询  -->
-	<select id="pageQuery"
-		parameterType="com.aspire.webbas.core.pagination.mybatis.pager.Page"
-		resultMap="BaseResultMap">
+	<select id="pageQuery" parameterType="com.aspire.webbas.core.pagination.mybatis.pager.Page" resultMap="BaseResultMap">
 		select * from ${info.tableInfo.tableName} 
 		where 1 = 1 
 	</select>

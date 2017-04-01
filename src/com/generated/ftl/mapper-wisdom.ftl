@@ -1,4 +1,4 @@
-/*
+/**
  * ${info.tableInfo.className}Mapper.java
  * ${info.corporateName}
  * All rights reserved.
@@ -19,7 +19,7 @@ import com.aspire.webbas.core.pagination.mybatis.pager.Page;
  * <pre>
  * <b>Title：</b>${info.tableInfo.className}Mapper.java<br/>
  * <b>@author： </b>${info.author}<br/>
- * <b>@version：</b>@version V1.0<br/>
+ * <b>@version：</b>V1.0<br/>
  * <b>@date：</b>${info.time?string("yyyy-MM-dd HH:mm:ss")} Created<br/>  
  * <b>Copyright (c) ${info.time?string("yyyy")} ASPire Tech.</b>   
  * </pre>

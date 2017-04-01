@@ -16,10 +16,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class Configuration {
     
     /**
-     * 驱动jar包
+     * 公司信息
      */
     @XStreamAlias("operator")
     private Operator operator;
+    
+    /**
+     * 身份标识
+     */
+    @XStreamAlias("type")
+    private Type type;
     
     /**
      * XML配置主要元素 
@@ -43,9 +49,17 @@ public class Configuration {
         this.operator = operator;
     }
 
-    @Override
+    public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	@Override
     public String toString() {
-        return "Configuration [operator=" + operator + ", context=" + context + "]";
+        return "Configuration [operator=" + operator + ", type=" + type + ", context=" + context + "]";
     }
     
 }

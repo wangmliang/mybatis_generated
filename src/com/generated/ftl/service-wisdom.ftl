@@ -1,4 +1,4 @@
-/*
+/**
  * ${info.tableInfo.className}.java
  * ${info.corporateName}
  * All rights reserved.
@@ -16,8 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.aspire.webbas.core.pagination.mybatis.pager.Page;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <pre>
  * <b>Title：</b>${info.tableInfo.className}Service.java<br/>
  * <b>@author： </b>${info.author}<br/>
- * <b>@version：</b>@version V1.0<br/>
+ * <b>@version：</b>V1.0<br/>
  * <b>@date：</b>${info.time?string("yyyy-MM-dd HH:mm:ss")} Created<br/>  
  * <b>Copyright (c) ${info.time?string("yyyy")} ASPire Tech.</b>   
  * </pre>
@@ -44,21 +43,16 @@ public class ${info.tableInfo.className}Service {
 	private ${info.tableInfo.className}Mapper ${info.tableInfo.methodName}Mapper;
 	
 	/**
-     * 根据主键id查询数据
-     * @param  searchParams 	参数Map
-     * @param  pageSize 		每页条数
-     * @return ${info.tableInfo.className}集合
-     * @author ${info.author}
-     * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
-     */
-	public PageInfo<${info.tableInfo.className}> getPageList(Map<String, Object> paramMap, Integer pageSize) {
-		Integer currentpage = 1;
-		if(null != paramMap.get("currentpage") && !paramMap.get("currentpage").equals("")) {
-			currentpage = Integer.parseInt(paramMap.get("currentpage").toString());
-		}
-		PageHelper.startPage(currentpage, pageSize);	// 自动分页
-		List<${info.tableInfo.className}> list = ${info.tableInfo.methodName}Mapper.getPageList(paramMap);
-		return new PageInfo<${info.tableInfo.className}>(list);
+	 * 数据列表
+	 * @param page 		${info.tableInfo.className}分页对象
+	 * @param request
+	 * @author WML
+	 * 2016年11月17日 - 下午5:34:34
+	 */
+	public Page<${info.tableInfo.className}> pageQuery(Page<${info.tableInfo.className}> page) {
+		List<${info.tableInfo.className}> list = ${info.tableInfo.methodName}Mapper.pageQuery(page);
+		page.setDatas(list);
+		return page;
 	}
 	
 	/**
@@ -173,7 +167,7 @@ public class ${info.tableInfo.className}Service {
 				return this.batchDelete(list);
 			}
 		}
-		return 0;
+		return 0;	
 	}
 	
 	/**
