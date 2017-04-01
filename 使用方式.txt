@@ -1,0 +1,4 @@
+1、将项目打成jar文件
+2、新建文件夹：存放 (a)*-generator-*jar文件	(b)generatorConfig.xml	(c)start.bat
+3、同级别目录新建lib文件夹，存放commons-lang3-3.3.2.jar	freemarker-2.3.8.jar	xstream-1.4.5.jar
+4、配置好参数后双击start.bat，即可生成代码。包含pojo,dao,xml,serivce,controller,页面待开发
