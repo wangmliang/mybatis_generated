@@ -6,15 +6,18 @@
 <generatorConfiguration>
 	
 	<!-- 操作人信息 -->
-	<operator author="WML" corporateName="因纳特科技有限公司"/>
+	<operator author="WML" corporateName="深圳市因纳特科技有限公司"/>
 
+	<!-- 类型 ynt;wisdom-->
+	<type value="ynt"/>
+	
 	<!-- 具体生成信息配置 -->
   	<context>
 		<!-- jdbc连接配置 -->
 	    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-	        connectionURL="jdbc:mysql://192.168.1.170:3306/in_shop_design?useUnicode=true&amp;characterEncoding=UTF-8"
+	        connectionURL="jdbc:mysql://192.168.1.170:3306/netyntwl?useUnicode=true&amp;characterEncoding=UTF-8"
 	        userName="root"
-	        passWord="123456">
+	        passWord="root">
 	    </jdbcConnection>
 	
 		<!-- 实体类配置 -->
@@ -22,6 +25,9 @@
 
 		<!-- XML文件配置 -->
         <sqlMapGenerator targetPackage="mybatis" targetProject="code"></sqlMapGenerator>
+        
+        <!-- XML继承文件配置 -->
+        <sqlMapExtendGenerator targetPackage="mybatis.extend" targetProject="code"></sqlMapExtendGenerator>
 
 		<!-- 接口文件配置 -->
         <javaClientGenerator targetPackage="com.yntsoft.mapper" targetProject="code"></javaClientGenerator>
@@ -38,7 +44,7 @@
 		<!-- 待生成表集合 -->
 		<list>
 			<!-- 表名，建议数据表名使用以下格式"user_info" -->
-			<!-- isContent:标识是否生成注释  true:需要  false:不需要  默认为true -->
+			<!-- isContent:标识是否生成注释  true:需要  false:不需要  默认为true(注：功能未实现) -->
 			<table isContent="true" tableName="commodity_association"></table>
 			
 		</list>
