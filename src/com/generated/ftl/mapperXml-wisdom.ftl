@@ -70,8 +70,7 @@
 	</delete>
 	
 	<!-- 新增 -->
-	<insert id="insert" parameterType="${info.entityPackage}.${info.tableInfo.className}"
-			useGeneratedKeys="true" keyProperty="${info.tableInfo.primaryKeyEntity}">
+	<insert id="insert" parameterType="${info.entityPackage}.${info.tableInfo.className}" useGeneratedKeys="true" keyProperty="${info.tableInfo.primaryKeyEntity}">
 		insert into ${info.tableInfo.tableName}(<#list info.tableInfo.list as var><#if (info.tableInfo.list?size -1 == var_index)>${var.name}<#else>${var.name}, </#if><#if (var_index != 0 && var_index % 3 == 0)>
 		</#if></#list> ) 
 		values (<#list info.tableInfo.list as var><#if (info.tableInfo.list?size -1 == var_index)>${r"#{"}${var.className}, jdbcType=${var.dbType}${r"}"}<#else>${r"#{"}${var.className}, jdbcType=${var.dbType}${r"}"}, </#if><#if (var_index != 0 && var_index % 3 == 0)>
@@ -79,17 +78,16 @@
 	</insert>
 	
 	<!-- 新增 -->
-	<insert id="insertSelective" parameterType="${info.entityPackage}.${info.tableInfo.className}"
-			useGeneratedKeys="true" keyProperty="${info.tableInfo.primaryKeyEntity}">
+	<insert id="insertSelective" parameterType="${info.entityPackage}.${info.tableInfo.className}" useGeneratedKeys="true" keyProperty="${info.tableInfo.primaryKeyEntity}">
     	insert into ${info.tableInfo.tableName}
-	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	    <trim prefix="("suffix=")" suffixOverrides="," >
 	    	<#list info.tableInfo.list as var>
 		    <if test="${var.className} != null" >
 		    	${var.name},
 		    </if>
 		    </#list>
 	    </trim>
-	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <trim prefix="values ("suffix=")" suffixOverrides="," >
 	    	<#list info.tableInfo.list as var>
 		    <if test="${var.className} != null" >
 		        ${r"#{"}${var.className}, jdbcType=${var.dbType}${r"}"},
