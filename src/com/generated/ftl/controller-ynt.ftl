@@ -27,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springside.modules.web.Servlets;
 
@@ -58,7 +59,7 @@ public class ${info.tableInfo.className}Controller {
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String list(Model model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try{
 			Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 			
@@ -70,6 +71,7 @@ public class ${info.tableInfo.className}Controller {
 			model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类查询列表异常：" + e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error_message", "操作失败！");
 		}
 		return "/list";
 	}
@@ -82,11 +84,12 @@ public class ${info.tableInfo.className}Controller {
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String add(Model model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try{
 			
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类跳转add页面异常：" + e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error_message", "删除失败！");
 		}
 		return "/add";
 	}
@@ -100,11 +103,13 @@ public class ${info.tableInfo.className}Controller {
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@Valid ${info.tableInfo.className} data, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String save(@Valid ${info.tableInfo.className} data, Model model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try{
 			${info.tableInfo.methodName}Service.saveAndUpdate(data);
+			redirectAttributes.addFlashAttribute("info_message", "保存成功！");
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error_message", "保存失败！");
 		}
 		return "redirect:/list";
 	}
@@ -119,13 +124,14 @@ public class ${info.tableInfo.className}Controller {
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(String ${info.tableInfo.primaryKeyEntity}, boolean flag, Model model, 
-			HttpServletRequest request, HttpServletResponse response) {
+	public String delete(String ${info.tableInfo.primaryKeyEntity}, boolean flag, Model model, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try{
 			${info.tableInfo.methodName}Service.delete(${info.tableInfo.primaryKeyEntity}, flag);
+			redirectAttributes.addFlashAttribute("info_message", "删除成功！");
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类删除数据异常：" + e.getMessage(), e);
+			redirectAttributes.addFlashAttribute("error_message", "删除失败！");
 		}
-		return "redirect:/list";
+		return "redirect:/${info.tableInfo.methodName}/list";
 	}
 }
