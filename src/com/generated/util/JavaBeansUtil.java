@@ -67,10 +67,8 @@ public class JavaBeansUtil {
      * @param firstCharacterUppercase	true / false
      * @return 转化后的字符串
      */
-    public static String getCamelCaseString(String inputString,
-            boolean firstCharacterUppercase) {
+    public static String getCamelCaseString(String inputString, boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();
-
         boolean nextUpperCase = false;
         for (int i = 0; i < inputString.length(); i++) {
             char c = inputString.charAt(i);
@@ -98,7 +96,9 @@ public class JavaBeansUtil {
             }
         }
         if (firstCharacterUppercase) {
-            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        	char[] c = inputString.toCharArray();
+        	if(c.length < 2 || c[1] != '_')
+        		sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         }
         return sb.toString();
     }
@@ -110,16 +110,13 @@ public class JavaBeansUtil {
      */
     public static String getValidPropertyName(String inputString) {
         String answer;
-
         if (inputString == null) {
             answer = null;
         } else if (inputString.length() < 2) {
             answer = inputString.toLowerCase(Locale.US);
         } else {
-            if (Character.isUpperCase(inputString.charAt(0))
-                    && !Character.isUpperCase(inputString.charAt(1))) {
-                answer = inputString.substring(0, 1).toLowerCase(Locale.US)
-                        + inputString.substring(1);
+            if (Character.isUpperCase(inputString.charAt(0)) && !Character.isUpperCase(inputString.charAt(1))) {
+                answer = inputString.substring(0, 1).toLowerCase(Locale.US) + inputString.substring(1);
             } else {
                 answer = inputString;
             }
@@ -128,7 +125,7 @@ public class JavaBeansUtil {
     }
     
     public static void main(String[] args) {
-        System.out.println(JavaBeansUtil.getGetterMethodName("user_id"));
+        /*System.out.println(JavaBeansUtil.getGetterMethodName("user_id"));
         System.out.println(JavaBeansUtil.getSetterMethodName("user_id"));
         System.out.println(JavaBeansUtil.getValidPropertyName("user_id"));
         System.out.println(JavaBeansUtil.getCamelCaseString("user_id", true));
@@ -136,5 +133,11 @@ public class JavaBeansUtil {
         
         System.out.println(JavaBeansUtil.getGetterMethodName(JavaBeansUtil.getCamelCaseString("user_id", true)));
         System.out.println(JavaBeansUtil.getSetterMethodName(JavaBeansUtil.getCamelCaseString("user_id", false)));
+        System.out.println(JavaBeansUtil.getSetterMethodName(JavaBeansUtil.getCamelCaseString("city_id", false)));*/
+    	System.out.println(getCamelCaseString("user_id", true));
+    	System.out.println(getCamelCaseString("x_coord_id", true));
+    	
+    	System.out.println(getCamelCaseString("user_id", false));
+    	System.out.println(getCamelCaseString("x_coord", false));
     }
 }

@@ -110,6 +110,7 @@ public class DatabaseMetaDateApplication {
              */
             columns.setName(dbColumnsInfo.getColumnsName());
             columns.setClassName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), false));
+//          columns.setTersName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), false));
             columns.setTersName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), true));
             /**
              *  字段类型
