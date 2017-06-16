@@ -112,6 +112,10 @@ public class DatabaseMetaDateApplication {
             columns.setClassName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), false));
 //          columns.setTersName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), false));
             columns.setTersName(JavaBeansUtil.getCamelCaseString(dbColumnsInfo.getColumnsName(), true));
+            columns.setIsNull(dbColumnsInfo.getIsNull());
+            columns.setCharMaxLength(dbColumnsInfo.getCharMaxLength());
+            columns.setNumericPrecisionRadix(dbColumnsInfo.getNumericPrecisionRadix());
+            columns.setNumericScale(dbColumnsInfo.getNumericScale());
             /**
              *  字段类型
              */
@@ -120,7 +124,10 @@ public class DatabaseMetaDateApplication {
             /**
              *  字段注释
              */
-            columns.setRemark(dbColumnsInfo.getRemarks());    
+            columns.setRemark(dbColumnsInfo.getRemarks());
+            /**
+             * 外键信息
+             */
             columnsList.add(columns);
             /**
              *  存主键信息
@@ -219,8 +226,15 @@ public class DatabaseMetaDateApplication {
          */
         Freemarker.printFile("controller-" + value +".ftl", root, tableInfo.getClassName() + "Controller.java", info.getControllerPath(), info.getFtlPath());
         
-        //jsp
-        
+        /**
+         * jsp
+         */
+        // List
+        Freemarker.printFile("list.ftl", root, tableInfo.getMethodName() + "_list.jsp", info.getPagePath(), info.getFtlPath());
+        // save
+        Freemarker.printFile("save.ftl", root, tableInfo.getMethodName() + "_save.jsp", info.getPagePath(), info.getFtlPath());
+        // info
+        Freemarker.printFile("info.ftl", root, tableInfo.getMethodName() + "_info.jsp", info.getPagePath(), info.getFtlPath());
         System.out.println("    【" + tableInfo.getTableName() + "】表数据已生成...");
     }
     
@@ -275,7 +289,7 @@ public class DatabaseMetaDateApplication {
      * @throws SQLException
      */
     public static List<DBColumnsInfoDto> getColumnByTable(Connection conn, String db, String tableName) throws SQLException {
-    	String sql = "select COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT from information_schema.columns "
+    	String sql = "select COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_COMMENT, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE from information_schema.columns "
     			+ "where table_schema = ? and table_name = ?"; 
         PreparedStatement ps = null; 
         ResultSet rs = null; 
@@ -289,6 +303,10 @@ public class DatabaseMetaDateApplication {
         		DBColumnsInfoDto columns = new DBColumnsInfoDto();
         		columns.setColumnsName(rs.getString("COLUMN_NAME"));
         		columns.setTypeName(rs.getString("DATA_TYPE"));
+        		columns.setIsNull(Boolean.valueOf(rs.getString("IS_NULLABLE").toLowerCase()));
+        		columns.setCharMaxLength(rs.getInt("CHARACTER_MAXIMUM_LENGTH"));
+        		columns.setNumericPrecisionRadix(rs.getInt("NUMERIC_PRECISION"));
+        		columns.setNumericScale(rs.getInt("NUMERIC_SCALE"));
         		columns.setRemarks(rs.getString("COLUMN_COMMENT"));
         		list.add(columns);
         	} 
@@ -307,7 +325,58 @@ public class DatabaseMetaDateApplication {
     }
     
     /**
-     * 根据数据表查询对应的外键信息(子表字段 + 父表表名 + 父表字段)
+     * 根据数据表名及字段名查询是否是外键
+     * @param conn
+     * @param db
+     * @param tableName
+     * @return
+     * @author WML
+     * 2017年6月16日 - 上午9:59:53
+     */
+    public static ForeignKeyDto getForeignKeyByTableAndColumn(Connection conn, String db, String tableName, String columnId) {
+    	try {
+    		String sql = "select C.COLUMN_NAME as COLUMN_NAME, C.REFERENCED_TABLE_NAME as REFERENCED_TABLE_NAME, C.REFERENCED_COLUMN_NAME as REFERENCED_COLUMN_NAME"	
+    				+ " from INFORMATION_SCHEMA.KEY_COLUMN_USAGE C"
+    				+ " JOIN INFORMATION_SCHEMA. TABLES T ON T.TABLE_NAME = C.TABLE_NAME "
+    				+ " where C.REFERENCED_TABLE_NAME IS NOT NULL and C.TABLE_NAME = ?"
+    				+ " and C.COLUMN_NAME =? GROUP BY C.REFERENCED_TABLE_NAME";
+    		
+    		PreparedStatement ps = null; 
+            ResultSet rs = null; 
+        	ps = conn.prepareStatement(sql); 
+        	ps.setString(1, tableName);
+        	ps.setString(2, columnId); 
+        	rs = ps.executeQuery();
+        	ForeignKeyDto foreignKey = null;
+        	while(rs.next()){ 
+        		foreignKey = new ForeignKeyDto();
+        		/**
+        		 *  子表字段
+        		 */
+        		foreignKey.setFkColumnName(rs.getString("COLUMN_NAME"));  
+        		/**
+        		 *  父表表名
+        		 */
+        		foreignKey.setPkTablenName(rs.getString("REFERENCED_TABLE_NAME"));
+        		foreignKey.setProperty(JavaBeansUtil.getCamelCaseString(rs.getString("REFERENCED_TABLE_NAME"), false));
+        		foreignKey.setTersName(JavaBeansUtil.getCamelCaseString(rs.getString("REFERENCED_TABLE_NAME"), true));
+        		/**
+        		 *  父表字段
+        		 */
+        		foreignKey.setEntityName(!rs.getString("COLUMN_NAME").equals(rs.getString("REFERENCED_COLUMN_NAME")) ? 
+                    JavaBeansUtil.getCamelCaseString(rs.getString("REFERENCED_TABLE_NAME") + "_" + rs.getString("COLUMN_NAME"), false) 
+                    : JavaBeansUtil.getCamelCaseString(rs.getString("REFERENCED_TABLE_NAME"), false));
+        	}
+        	return foreignKey;
+		} catch (Exception e) {
+			System.out.println("根据数据表名及字段名查询对应的外键信息异常：" + e.getMessage());
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    /**
+     * 根据数据表查询对应的外键信息(子表字段 + 父表表名 + 父表字段) 
      * @param conn
      * @param db
      * @param tableName

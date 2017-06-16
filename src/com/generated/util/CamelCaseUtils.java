@@ -1,6 +1,7 @@
 package com.generated.util;
 
 public class CamelCaseUtils {
+	
 	private static final char SEPARATOR = '_';
 
 	/**
@@ -48,14 +49,11 @@ public class CamelCaseUtils {
         if (s == null) {
             return null;
         }
-
         s = s.toLowerCase();
-
         StringBuilder sb = new StringBuilder(s.length());
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-
             if (c == SEPARATOR) {
                 upperCase = true;
             } else if (upperCase) {
@@ -77,14 +75,12 @@ public class CamelCaseUtils {
         if (s == null) {
             return null;
         }
-
         s = s.toLowerCase();
         int a = 1;
         StringBuilder sb = new StringBuilder(s.length());
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-
             if (c == SEPARATOR) {
                 upperCase = true;
                 a++;
@@ -121,9 +117,8 @@ public class CamelCaseUtils {
         if(ch[0] >= 'a' && ch[0] <= 'z'){
          ch[0] = (char)(ch[0] - 32);
         }
-        
         return new String(ch);
-       }
+    }
     
     public static void main(String[] args) {
         System.out.println(CamelCaseUtils.toUnderlineName("ISOCertifiedStaff"));

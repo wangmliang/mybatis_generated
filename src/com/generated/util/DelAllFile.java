@@ -4,19 +4,16 @@ import java.io.File;
 
 /**
  * java删除所有文件和文件夹
- * 创建人：FH 创建时间：2015年1月12日
- * @version
+ * <pre>
+ * <b>Title：</b>DelAllFile.java<br/>
+ * <b>@author：</b>WML<br/>
+ * <b>@date：</b>2017年6月16日 - 下午2:09:57<br/>  
+ * <b>@version V1.0</b></br/>
+ * <b>Copyright (c) 2017 ASPire Tech.</b>   
+ * </pre>
  */
 public class DelAllFile {
 	
-	public static void main(String args[]) {
-		delFolder("e:/e/a");			//只删除e下面a及a下面所有文件和文件夹,e不会被删掉
-		//delFolder("D:/WEBSerser/apache-tomcat-8.0.15/me-webapps/UIMYSQL/WEB-INF/classes/../../admin00/ftl/code");	
-		//delFolder("D:\\WEBSerser\\apache-tomcat-8.0.15\\me-webapps\\UIMYSQL\\admin00\\ftl\\code");
-		//delFolder("D:/WEBSerser/apache-tomcat-8.0.15/me-webapps/UIMYSQL/WEB-INF/classes/../../admin00/ftl/code");
-		System.out.println("deleted");
-	}
-
 	/**
 	 * @param folderPath 文件路径 (只删除此路径的最末路径下所有文件和文件夹)
 	 */

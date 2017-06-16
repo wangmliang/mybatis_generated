@@ -31,6 +31,28 @@ public class Columns {
 	private String entityType;
 	
 	/**
+	 * 是否非空
+	 */
+	private Boolean isNull;
+	
+	/**
+	 * 字符串最大长度
+	 */
+	private Integer charMaxLength;;
+	
+	/**
+	 * 近似数字数据、精确数字数据、整型数据或货币数据的精度基数。否则，返回 NULL
+	 * 金额类型长度
+	 */
+	private Integer numericPrecisionRadix;
+	
+	/**
+	 * 近似数字数据、精确数字数据、整数数据或货币数据的小数位数。否则，返回 NULL。
+	 * 金额类型保留位数
+	 */
+	private Integer numericScale;
+	
+	/**
 	 * 字段注释
 	 */
 	private String remark;
@@ -83,10 +105,42 @@ public class Columns {
 		this.remark = remark;
 	}
 
-    @Override
-    public String toString() {
-        return "Columns [name=" + name + ", className=" + className + ", tersName=" + tersName
-               + ", dbType=" + dbType + ", entityType=" + entityType + ", remark=" + remark + "]";
-    }
+    public Boolean getIsNull() {
+		return isNull;
+	}
+
+	public void setIsNull(Boolean isNull) {
+		this.isNull = isNull;
+	}
+
+	public Integer getCharMaxLength() {
+		return charMaxLength;
+	}
+
+	public void setCharMaxLength(Integer charMaxLength) {
+		this.charMaxLength = charMaxLength;
+	}
+
+	public Integer getNumericPrecisionRadix() {
+		return numericPrecisionRadix;
+	}
+
+	public void setNumericPrecisionRadix(Integer numericPrecisionRadix) {
+		this.numericPrecisionRadix = numericPrecisionRadix;
+	}
+
+	public Integer getNumericScale() {
+		return numericScale;
+	}
+
+	public void setNumericScale(Integer numericScale) {
+		this.numericScale = numericScale;
+	}
+
+	@Override
+	public String toString() {
+		return "Columns [name=" + name + ", className=" + className + ", tersName=" + tersName + ", dbType=" + dbType + ", entityType=" + entityType + ", isNull=" + isNull + ", charMaxLength="
+				+ charMaxLength + ", numericPrecisionRadix=" + numericPrecisionRadix + ", numericScale=" + numericScale + ", remark=" + remark + "]";
+	}
 
 }

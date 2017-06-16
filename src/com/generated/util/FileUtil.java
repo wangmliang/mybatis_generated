@@ -14,16 +14,9 @@ import java.nio.channels.FileChannel.MapMode;
 
 public class FileUtil {
 
-	public static void main(String[] args) {
-		String dirName = "d:/FH/topic/";// 创建目录
-		FileUtil.createDir(dirName);
-	}
-
 	/**
 	 * 创建目录
-	 * 
-	 * @param destDirName
-	 *            目标目录名
+	 * @param destDirName 	目标目录名
 	 * @return 目录创建成功返回true，否则返回false
 	 */
 	public static boolean createDir(String destDirName) {
@@ -44,11 +37,7 @@ public class FileUtil {
 
 	/**
 	 * 删除文件
-	 * 
-	 * @param filePathAndName
-	 *            String 文件路径及名称 如c:/fqf.txt
-	 * @param fileContent
-	 *            String
+	 * @param filePathAndName 文件路径及名称 如c:/fqf.txt
 	 * @return boolean
 	 */
 	public static void delFile(String filePathAndName) {
@@ -57,18 +46,14 @@ public class FileUtil {
 			filePath = filePath.toString();
 			java.io.File myDelFile = new java.io.File(filePath);
 			myDelFile.delete();
-
 		} catch (Exception e) {
 			System.out.println("删除文件操作出错");
 			e.printStackTrace();
-
 		}
-
 	}
 
 	/**
 	 * 读取到字节数组0
-	 * 
 	 * @param filePath //路径
 	 * @throws IOException
 	 */
@@ -104,7 +89,6 @@ public class FileUtil {
 	 * @throws IOException
 	 */
 	public static byte[] toByteArray(String filePath) throws IOException {
-
 		File f = new File(filePath);
 		if (!f.exists()) {
 			throw new FileNotFoundException(filePath);
@@ -135,7 +119,6 @@ public class FileUtil {
 
 	/**
 	 * 读取到字节数组2
-	 * 
 	 * @param filePath
 	 * @return
 	 * @throws IOException
@@ -177,7 +160,6 @@ public class FileUtil {
 
 	/**
 	 * Mapped File way MappedByteBuffer 可以在处理大文件时，提升性能
-	 * 
 	 * @param filename
 	 * @return
 	 * @throws IOException
