@@ -57,9 +57,9 @@ public class ${info.tableInfo.className} {
 	/**
      * 设置：${var.remark}
      * @author ${info.author}
-     * @version V1.0 
-     * ${info.time?string("yyyy-MM-dd HH:mm:ss")}
+     * @version V1.0
      * @param id the value for ${info.tableInfo.tableName}.${var.name}
+     * ${info.time?string("yyyy-MM-dd HH:mm:ss")}
      */
 	public void set${var.tersName}(${var.entityType} ${var.className}) {
 		<#if var.entityType == "String">
