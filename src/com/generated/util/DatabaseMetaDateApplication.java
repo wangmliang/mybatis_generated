@@ -230,11 +230,11 @@ public class DatabaseMetaDateApplication {
          * jsp
          */
         // List
-        Freemarker.printFile("list.ftl", root, tableInfo.getMethodName() + "_list.jsp", info.getPagePath(), info.getFtlPath());
+        Freemarker.printFile("list.ftl", root, tableInfo.getMethodName() + "_list.jsp", info.getPagePath() + tableInfo.getMethodName() + "/", info.getFtlPath());
         // save
-        Freemarker.printFile("save.ftl", root, tableInfo.getMethodName() + "_save.jsp", info.getPagePath(), info.getFtlPath());
+        Freemarker.printFile("save.ftl", root, tableInfo.getMethodName() + "_save.jsp", info.getPagePath() + tableInfo.getMethodName() + "/", info.getFtlPath());
         // info
-        Freemarker.printFile("info.ftl", root, tableInfo.getMethodName() + "_info.jsp", info.getPagePath(), info.getFtlPath());
+        Freemarker.printFile("info.ftl", root, tableInfo.getMethodName() + "_info.jsp", info.getPagePath() + tableInfo.getMethodName() + "/", info.getFtlPath());
         System.out.println("    【" + tableInfo.getTableName() + "】表数据已生成...");
     }
     
