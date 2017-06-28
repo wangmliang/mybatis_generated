@@ -35,7 +35,7 @@
 				</form>
 				<div class="space-6"></div>
 				<table id="grid-table"></table>
-				<div id="grid-pager" style="height: 200px;"></div>
+				<div id="grid-pager"></div>
 			</div>
 		</div>
 		<script>
