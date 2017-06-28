@@ -16,8 +16,7 @@
 						</small>
 					</h1>
 		 		</div>
-		 		<input type="hidden" name="${info.tableInfo.primaryKey}"  id="${info.tableInfo.primaryKey}"/>
-				<input type="hidden" name="updId"  id="updId"/>
+		 		<input type="hidden" name="${info.tableInfo.primaryKey}" id="${info.tableInfo.primaryKey}"/>
 				<div class="row">
 					<!-- left -->
 					<div class="col-xs-6">
@@ -95,18 +94,16 @@
 						</#list>
 					},
 					submitHandler : function(form) {
-						if(pkId == "" || pkId == null) {
-							$.ajaxSubmit(save_url, $(form).serializeJson(), function(data) {
-									if (data.success == true) {
-									    Q_Alert("操作成功", function() {
-									    	location.href = list_url;
-				                        });
-									} else {
-										Q_Alert_Fail(data.message);
-									}
-								}, $("#submitButton")
-							);
-						}
+						$.ajaxSubmit(save_url, $(form).serializeJson(), function(data) {
+								if (data.success == true) {
+								    Q_Alert("操作成功", function() {
+								    	location.href = list_url;
+			                        });
+								} else {
+									Q_Alert_Fail(data.message);
+								}
+							}, $("#submitButton")
+						);
 					return false;
 				}
 			});
