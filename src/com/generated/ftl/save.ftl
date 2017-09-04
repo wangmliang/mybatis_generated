@@ -2,6 +2,18 @@
 <html>
 <head>
 	<title>${info.tableInfo.tableComment}</title>
+	<style type="text/css">
+ 		.label_text { height: 35px; line-height: 35px; } 
+ 		.bs_btn { float: right; padding-right: 25px; padding-bottom: 10px; } 
+ 		.col-xs-4 { padding-top: 10px; } 
+ 		table tbody tr td { text-align: center !important; } 
+ 	    .ui-jqgrid .ui-jqgrid-labels th { text-align: center !important; } 
+    	.control-group{ float:left; }
+ 	    .file_css{ margin-left: 27%; }
+	    .batch_css{ margin: 0px 0px 10px 112px; }
+	    .file_upload{ position: absolute;left: 0; top: 160px; }
+	    .upload_css_ie{ height:34px; position: absolute; top: 0; opacity: 0; -khtml-opacity:0;-moz-opacity:0;filter:alpha(opacity=0); filter:"alpha(opacity=0)";opacity:0; filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0); }
+	</style>
 </head>
 <body>
 	<div class="page-content">
