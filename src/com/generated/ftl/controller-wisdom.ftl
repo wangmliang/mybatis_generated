@@ -58,7 +58,7 @@ public class ${info.tableInfo.className}Controller extends BaseController {
      */
 	@RequestMapping(value = "/list")
 	public String list(Model model, HttpServletRequest request) {
-		return "/list";
+		return "/${info.tableInfo.methodName}_list";
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class ${info.tableInfo.className}Controller extends BaseController {
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String save(${info.tableInfo.primaryKeyEntityType} id, Model model, HttpServletRequest request) {
 		model.addAttribute("id", id);
-		return "/save";
+		return "/${info.tableInfo.methodName}_save";
 	}
 	
 	/**
@@ -118,6 +118,7 @@ public class ${info.tableInfo.className}Controller extends BaseController {
 			${info.tableInfo.methodName}Service.saveAndUpdate(data);
 		} catch (Exception e) {
 			logger.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
+			return super.fail("操作失败");
 		}
 		return super.success(data);
 	}
