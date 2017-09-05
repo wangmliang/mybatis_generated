@@ -135,7 +135,7 @@
 				if(id == "") {
 					Q_Alert_Fail("请至少选择一行数据");
 				} else {
-					deleteEvent(id, '?flag=false');
+					deleteEvent(id);
 				}
 			});
 		});
@@ -155,9 +155,7 @@
 		}
 		
 		/** 删除操作 **/
-		function deleteEvent(id, url) {
-			if(null == url) 
-				url = "?type=true";
+		function deleteEvent(id) {
 			Q_Confirm("是否要删除？", function(result) {
 				if (result) {
 					$.ajaxSubmit(delete_url, {
@@ -186,7 +184,7 @@
 			return '<div >'
 			+ '<button onclick=\"editEvent(' + rowObject["${info.tableInfo.primaryKey}"] + ')\" class=\"btn btn-xs btn-info\" data-rel=\"tooltip\" title=\"编辑\" >'
 			+ '<i class=\"ace-icon fa fa-pencil bigger-120\"></i></button>&nbsp;'
-			+ '<button onclick=\"deleteEvent(' + rowObject["${info.tableInfo.primaryKey}"]+ ', null)\" class=\"btn btn-xs btn-danger\" data-rel=\"tooltip\" title=\"删除\" >'
+			+ '<button onclick=\"deleteEvent(' + rowObject["${info.tableInfo.primaryKey}"]+ ')\" class=\"btn btn-xs btn-danger\" data-rel=\"tooltip\" title=\"删除\" >'
 			+ '<i class=\"ace-icon fa fa-trash-o bigger-120\"></i></button>'
 			+ '</div>';
 		}
