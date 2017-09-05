@@ -132,9 +132,9 @@ public class ${info.tableInfo.className}Controller extends BaseController {
      */
     @RequestMapping(value = "/delete")
 	@ResponseBody
-	public Map<String, Object> delete(String id, boolean flag) {
+	public Map<String, Object> delete(String id) {
     	try {
-    		int row = ${info.tableInfo.methodName}Service.delete(id, flag);
+    		int row = ${info.tableInfo.methodName}Service.delete(id, false);
     		if(row == 0)
     			return super.fail("删除失败");
 		} catch (Exception e) {
