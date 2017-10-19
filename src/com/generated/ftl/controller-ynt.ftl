@@ -45,7 +45,7 @@ import org.springside.modules.web.Servlets;
 @RequestMapping(value ="/${info.tableInfo.methodName}")
 public class ${info.tableInfo.className}Controller {
 
-	protected static Logger logger = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
+	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Service */
 	@Autowired
@@ -70,7 +70,7 @@ public class ${info.tableInfo.className}Controller {
 			// 将搜索条件编码成字符串，用于排序，分页的URL
 			model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类查询列表异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类查询列表异常：" + e.getMessage(), e);
 			redirectAttributes.addFlashAttribute("error_message", "操作失败！");
 		}
 		return "/list";
@@ -88,7 +88,7 @@ public class ${info.tableInfo.className}Controller {
 		try{
 			
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类跳转add页面异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类跳转add页面异常：" + e.getMessage(), e);
 			redirectAttributes.addFlashAttribute("error_message", "删除失败！");
 		}
 		return "/add";
@@ -108,7 +108,7 @@ public class ${info.tableInfo.className}Controller {
 			${info.tableInfo.methodName}Service.saveAndUpdate(data);
 			redirectAttributes.addFlashAttribute("info_message", "保存成功！");
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
 			redirectAttributes.addFlashAttribute("error_message", "保存失败！");
 		}
 		return "redirect:/list";
@@ -129,7 +129,7 @@ public class ${info.tableInfo.className}Controller {
 			${info.tableInfo.methodName}Service.delete(${info.tableInfo.primaryKeyEntity}, flag);
 			redirectAttributes.addFlashAttribute("info_message", "删除成功！");
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类删除数据异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类删除数据异常：" + e.getMessage(), e);
 			redirectAttributes.addFlashAttribute("error_message", "删除失败！");
 		}
 		return "redirect:/${info.tableInfo.methodName}/list";

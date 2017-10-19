@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value ="/${info.tableInfo.methodName}")
 public class ${info.tableInfo.className}Controller extends BaseController {
 
-	protected static Logger logger = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
+	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Service */
 	@Autowired
@@ -117,7 +117,7 @@ public class ${info.tableInfo.className}Controller extends BaseController {
 		try{
 			${info.tableInfo.methodName}Service.saveAndUpdate(data);
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类保存数据异常：" + e.getMessage(), e);
 			return super.fail("操作失败");
 		}
 		return super.success(data);
@@ -138,7 +138,7 @@ public class ${info.tableInfo.className}Controller extends BaseController {
     		if(row == 0)
     			return super.fail("删除失败");
 		} catch (Exception e) {
-			logger.error("${info.tableInfo.className}类delete数据异常：" + e.getMessage(), e);
+			LOG.error("${info.tableInfo.className}类delete数据异常：" + e.getMessage(), e);
 			return super.fail("删除失败");
 		}
 		return super.success("删除成功");

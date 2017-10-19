@@ -37,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("${info.tableInfo.methodName}Service")
 @Transactional
 public class ${info.tableInfo.className}Service {
+
+	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Mapper */
 	@Autowired
@@ -157,7 +159,7 @@ public class ${info.tableInfo.className}Service {
      * @author ${info.author}
      * ${info.time?string("yyyy-MM-dd HH:mm:ss")}  Created
      */
-	public int delete(String id, boolean flag) {
+	public int delete(${info.tableInfo.primaryKeyEntityType} id, boolean flag) {
 		// 批量删除
 		if(flag) {
 			return this.deleteByPrimaryKey(${info.tableInfo.primaryKeyEntityType}.valueOf(id));
