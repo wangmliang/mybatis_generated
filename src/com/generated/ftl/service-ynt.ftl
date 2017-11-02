@@ -45,6 +45,11 @@ public class ${info.tableInfo.className}Service {
 	@Autowired
 	private ${info.tableInfo.className}Mapper ${info.tableInfo.methodName}Mapper;
 	
+	/***
+	 * 分页页码
+	 */
+	private static final String CURRENTPAGE = "currentpage";
+	
 	/**
      * 根据主键id查询数据
      * @param  searchParams 	参数Map
@@ -55,8 +60,8 @@ public class ${info.tableInfo.className}Service {
      */
 	public PageInfo<${info.tableInfo.className}> getPageList(Map<String, Object> paramMap, Integer pageSize) {
 		Integer currentpage = 1;
-		if(null != paramMap.get("currentpage") && !paramMap.get("currentpage").equals("")) {
-			currentpage = Integer.parseInt(paramMap.get("currentpage").toString());
+		if(null != paramMap.get(CURRENTPAGE) && !"".equals(paramMap.get(CURRENTPAGE))) {
+			currentpage = Integer.parseInt(paramMap.get(CURRENTPAGE).toString());
 		}
 		PageHelper.startPage(currentpage, pageSize);	// 自动分页
 		List<${info.tableInfo.className}> list = ${info.tableInfo.methodName}Mapper.getPageList(paramMap);
