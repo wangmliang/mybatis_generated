@@ -20,6 +20,9 @@ import com.aspire.webbas.core.pagination.mybatis.pager.Page;
 
 import org.apache.commons.lang3.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ${info.tableInfo.className}Service {
 
-	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
+	private static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Mapper */
 	@Autowired

@@ -45,7 +45,7 @@ import org.springside.modules.web.Servlets;
 @RequestMapping(value ="/${info.tableInfo.methodName}")
 public class ${info.tableInfo.className}Controller {
 
-	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
+	private static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Service */
 	@Autowired

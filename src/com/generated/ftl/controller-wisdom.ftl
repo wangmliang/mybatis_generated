@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value ="/${info.tableInfo.methodName}")
 public class ${info.tableInfo.className}Controller extends BaseController {
 
-	protected static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
+	private static Logger LOG = LoggerFactory.getLogger(${info.tableInfo.className}Controller.class);
 	
 	/** ${info.tableInfo.tableComment}Service */
 	@Autowired
